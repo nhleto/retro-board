@@ -1,0 +1,13 @@
+.wrapper {
+  display: flex;
+
+  .column {
+    flex: 1;
+    margin: 1rem;
+    padding: 0.25rem;
+
+    .text-box {
+      width: 100%;
+    }
+  }
+}

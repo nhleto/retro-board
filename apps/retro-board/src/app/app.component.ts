@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { NxWelcomeComponent } from './nx-welcome.component';
+import { HomeComponent } from './components/home/home.component';
 
 @Component({
   standalone: true,
-  imports: [NxWelcomeComponent],
+  imports: [HomeComponent],
   selector: 'retro-board-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],

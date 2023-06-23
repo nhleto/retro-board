@@ -1,0 +1,10 @@
+<div class="wrapper">
+  <div class="column"></div>
+  <div class="column" (keydown.enter)="submit()" [formGroup]="textForm">
+    <ul>
+      <li *ngFor="let message of messages$ | async">{{ message }}</li>
+    </ul>
+    <input class="text-box" formControlName="text" type="text" />
+  </div>
+  <div class="column"></div>
+</div>

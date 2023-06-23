@@ -5,8 +5,17 @@
 
 import express from 'express';
 import * as path from 'path';
+import { WebSocket } from 'ws';
 
+const socketServer = new WebSocket.Server({ port: 8080 });
 const app = express();
+
+socketServer.on('connection', (socket) => {
+  socket.on('message', (message) => {
+    console.log(`Roget that! ${message}`);
+    socket.send(`Roget that! ${message}`);
+  });
+});
 
 app.use('/assets', express.static(path.join(__dirname, 'assets')));
 
