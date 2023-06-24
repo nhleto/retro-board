@@ -4,7 +4,7 @@ export const MessageSchema = z.object({
   text: z.string().optional(),
 });
 
-const MessageTypeSchema = z.enum(['learned', 'liked', 'lacked', 'text']);
+export const MessageTypeSchema = z.enum(['learned', 'liked', 'lacked', 'text']);
 
 export const MessageRequestSchema = z.object({
   type: MessageTypeSchema,
@@ -13,3 +13,4 @@ export const MessageRequestSchema = z.object({
 
 export type Message = z.infer<typeof MessageSchema>;
 export type MessageRequest = z.infer<typeof MessageRequestSchema>;
+export type MessageEnum = z.infer<typeof MessageTypeSchema>;

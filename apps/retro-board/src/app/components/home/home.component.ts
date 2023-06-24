@@ -2,9 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { SocketService } from '../../services/socket.service';
-import { Observable, map, tap } from 'rxjs';
 import { scan } from 'rxjs/operators';
-import { z } from 'zod';
 import { Message, MessageRequest, MessageSchema } from '@retro-board/shared/models';
 
 @Component({
@@ -19,20 +17,11 @@ export class HomeComponent {
     text: this.fb.control('', Validators.required),
   });
 
-  // public messages$ = this.socketService.websocket$.pipe(
-  //   tap((data) => console.log(data, this.socketService.websocketValue)),
-  //   map((data) => [data?.text])
-  // );
-
-  messages$ = this.socketService.websocketText$.pipe(
-    scan((messages: string[], message: MessageRequest) => [...messages, message.message], [])
-  );
+  public messages$ = this.socketService
+    .socketStream$('text')
+    .pipe(scan((messages: string[], message: MessageRequest) => [...messages, message.message], []));
 
   constructor(private fb: FormBuilder, private socketService: SocketService) {}
-
-  ngOnInit() {
-    this.socketService.websocketText$.subscribe((data) => console.log(data.message));
-  }
 
   public submit() {
     const value = this.textForm.value;
