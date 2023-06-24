@@ -13,10 +13,6 @@ export class SocketService {
   });
 
   private websocketSubject = new BehaviorSubject<MessageRequest>({} as MessageRequest);
-  private websocketText$ = this.websocketSubject.pipe(filter((message) => message.type === 'text'));
-  private websocketLiked$ = this.websocketSubject.pipe(filter((message) => message.type === 'liked'));
-  private websocketLearned$ = this.websocketSubject.pipe(filter((message) => message.type === 'learned'));
-  private websocketLacked$ = this.websocketSubject.pipe(filter((message) => message.type === 'lacked'));
 
   public set websocket(value: MessageRequest) {
     this.socket.next(value);
@@ -36,15 +32,10 @@ export class SocketService {
   }
 
   public socketStream$(type: MessageEnum): Observable<MessageRequest> {
-    switch (type) {
-      case 'text':
-        return this.websocketText$;
-      case 'learned':
-        return this.websocketLearned$;
-      case 'liked':
-        return this.websocketLiked$;
-      case 'lacked':
-        return this.websocketLacked$;
-    }
+    return this.filterWebSocket$(type);
+  }
+
+  private filterWebSocket$(type: MessageEnum) {
+    return this.websocketSubject.pipe(filter((message) => message.type === type));
   }
 }
